@@ -17,7 +17,7 @@ class HomeAssistantService {
     this.hass = new Hass(hassOpts);
     this.connected = false;
     this.eventCallback =
-      typeof eventCallback === 'function' ? _eventCallback : false;
+      typeof _eventCallback === 'function' ? _eventCallback : false;
     this.init();
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "warpcore-homeassistant",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Craig J. Midwinter",
   "description": "warpcore service for homeassistant",
   "main": "dist/index.js",
