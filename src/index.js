@@ -1,5 +1,7 @@
 import { callService as callHassService } from 'home-assistant-js-websocket';
 import Hass from './lib/HassConnector';
+import * as utils from './utils';
+import * as constants from './const';
 
 /*
  * This class singleton should provide functions that interact with Home Assistant
@@ -62,4 +64,5 @@ class HomeAssistantService {
   };
 }
 
+export { utils, constants };
 export default HomeAssistantService;
