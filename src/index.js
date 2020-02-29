@@ -1,4 +1,3 @@
-import { callService as callHassService } from 'home-assistant-js-websocket';
 import Hass from './lib/HassConnector';
 import * as utils from './utils';
 import * as constants from './const';
@@ -57,7 +56,7 @@ class HomeAssistantService {
   callService = async ({ domain, service, serviceData }) => {
     logger.info('calling service', domain, service, serviceData);
     try {
-      callHassService(this.hass.conn, domain, service, serviceData);
+      this.hass.ha.callService(this.hass.conn, domain, service, serviceData);
     } catch (e) {
       logger.error(e);
     }
