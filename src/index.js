@@ -1,3 +1,4 @@
+import { entitiesColl } from 'home-assistant-js-websocket';
 import Hass from './lib/HassConnector';
 import * as utils from './utils';
 import * as constants from './const';
@@ -17,6 +18,7 @@ class HomeAssistantService {
     logger = _logger || console;
     this.hass = new Hass(hassOpts);
     this.connected = false;
+    this.entitiesCollection = false;
     this.eventCallback =
       typeof _eventCallback === 'function' ? _eventCallback : false;
     this.init();
@@ -47,6 +49,18 @@ class HomeAssistantService {
         this.eventCallback(e);
       }
     });
+
+    this.entitiesCollection = entitiesColl(this.hass.conn);
+    logger.info(this.entitiesCollection.state);
+    await this.entitiesCollection.refresh();
+    this.entitiesCollection.subscribe(entities => logger.info(entities));
+  };
+
+  getState = async entityId => {
+    if (!this.connected) {
+      return false;
+    }
+    return this.entitiesCollection.state[entityId];
   };
 
   setEventCallback = cb => {
