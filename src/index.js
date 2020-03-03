@@ -51,16 +51,16 @@ class HomeAssistantService {
     });
 
     this.entitiesCollection = entitiesColl(this.hass.conn);
-    logger.info(this.entitiesCollection.state);
     await this.entitiesCollection.refresh();
-    this.entitiesCollection.subscribe(entities => logger.info(entities));
   };
 
   getState = async entityId => {
     if (!this.connected) {
       return false;
     }
-    return this.entitiesCollection.state[entityId];
+    const entity = this.entitiesCollection.state[entityId];
+    console.log(entity);
+    return entity;
   };
 
   setEventCallback = cb => {
@@ -68,12 +68,16 @@ class HomeAssistantService {
   };
 
   callService = async ({ domain, service, serviceData }) => {
-    logger.info('calling service', domain, service, serviceData);
-    try {
-      this.hass.ha.callService(this.hass.conn, domain, service, serviceData);
-    } catch (e) {
-      logger.error(e);
+    if (!this.connected) {
+      throw new Error('not connected yet');
     }
+    logger.info('calling service', domain, service, serviceData);
+    return this.hass.api.callService(
+      this.hass.conn,
+      domain,
+      service,
+      serviceData
+    );
   };
 }
 
