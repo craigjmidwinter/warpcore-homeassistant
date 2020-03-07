@@ -46,6 +46,9 @@ class HomeAssistantService {
     // but for now like this
     this.hass.conn.subscribeEvents(e => {
       if (typeof this.eventCallback === 'function') {
+        logger.info('=== WARPCOREJS-HOMEASSISTANT EVENT ===');
+        logger.info(JSON.stringify(e, null, 2));
+        logger.info('=== END WARPCOREJS-HOMEASSISTANT EVENT ===');
         this.eventCallback(e);
       }
     });
@@ -59,7 +62,6 @@ class HomeAssistantService {
       return false;
     }
     const entity = this.entitiesCollection.state[entityId];
-    console.log(entity);
     return entity;
   };
 
